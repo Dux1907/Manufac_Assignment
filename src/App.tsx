@@ -19,6 +19,7 @@ export default function App() {
     }
     return elements;
   }
+  //Creating data for Table 1.
   interface CropData {
     Country: string;
     Year: string;
@@ -30,7 +31,7 @@ export default function App() {
   const filteredData: CropData[] = data.filter(
     (item: CropData) => item["Crop Production (UOM:t(Tonnes))"] !== ""
   );
-
+  //Some elements have values "",so filtered data just filters those values.
   function findMaximum(year: number): string {
     return filteredData
       .filter(
@@ -42,7 +43,7 @@ export default function App() {
           ? curr
           : prev;
       })["Crop Name"];
-  }
+  } // Reduce function to parse the data to find Maximum Production Crop.
   function findMinimum(year: number): string {
     return filteredData
       .filter(
@@ -55,6 +56,7 @@ export default function App() {
           : prev;
       })["Crop Name"];
   }
+  // Reduce function to parse the data to find Minimum Production Crop
 
   const elements: { year: number; maximum: string; minimum: string }[] =
     generateElements(1950, 2020);
@@ -73,6 +75,7 @@ export default function App() {
     acc[item["Crop Name"]].push(item);
     return acc;
   }, {});
+  //Reduce function to align all the same crops together
   const elements1: {
     crop: string;
     averageCropProduction: number;
@@ -98,6 +101,7 @@ export default function App() {
       averageAreaUnderCultivation: Number((total1 / 71).toFixed(3)),
     });
   });
+  //Creating data for Table 2
 
   const columns = elements1.map((element) => (
     <Table.Tr key={element.crop}>

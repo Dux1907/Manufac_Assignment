@@ -4,9 +4,9 @@ Get started with the template by clicking `Use this template` button on the top 
 
 [Documentation](https://mantine.dev/guides/vite/)
 
-# Manufac Frontend Task
+# Manufac Analytics | SDE Assignment
 ### Description
- Need to create table by parsing data from the given JSON object
+ Need to create table by parsing data from the given JSON object.
 
 ### Install the project with yarn.
 1. Clone the repository.
@@ -26,5 +26,7 @@ cd manufac assignment
  ##### Open http://localhost:5173 to view it in the browser.
 
  ## Results
-![App Screenshot](./Screenshot%202024-07-22%20at%2010.47.56 PM.png)
-![App Screenshot](./Screenshot%202024-07-22%20at%2010.48.02 PM.png)
+![App Screenshot](./results/Screenshot%202024-07-22%20at%2010.56.28 PM.png)
+![App Screenshot](./results/Screenshot%202024-07-22%20at%2010.56.37 PM.png)
+![App Screenshot](./results/Screenshot%202024-07-22%20at%2010.56.46 PM.png)
+![App Screenshot](./results/Screenshot%202024-07-22%20at%2010.59.43 PM.png)
