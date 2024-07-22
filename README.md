@@ -14,7 +14,6 @@ Get started with the template by clicking `Use this template` button on the top 
 
 ``` 
 yarn install
-cd manufac assignment
   ```
 
 ### Run the project
