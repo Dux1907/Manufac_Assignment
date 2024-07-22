@@ -5,8 +5,11 @@ import { Table } from "@mantine/core";
 import data from "../../Manufac_Assignment/Manufac _ India Agro Dataset.js";
 
 export default function App() {
-  function generateElements(baseYear: number, maxYear: number) {
-    const elements: { year: number; maximum: number; minimum: number }[] = [];
+  function generateElements(
+    baseYear: number,
+    maxYear: number
+  ): { year: number; maximum: string; minimum: string }[] {
+    const elements: { year: number; maximum: string; minimum: string }[] = [];
     for (let i = baseYear; i <= maxYear; i += 1) {
       elements.push({
         year: i,
@@ -16,11 +19,19 @@ export default function App() {
     }
     return elements;
   }
-  const filteredData = data.filter(
-    (item) => item["Crop Production (UOM:t(Tonnes))"] !== ""
+  interface CropData {
+    Country: string;
+    Year: string;
+    "Crop Name": string;
+    "Crop Production (UOM:t(Tonnes))": any;
+    "Yield Of Crops (UOM:Kg/Ha(KilogramperHectare))": number;
+    "Area Under Cultivation (UOM:Ha(Hectares))": number;
+  }
+  const filteredData: CropData[] = data.filter(
+    (item: CropData) => item["Crop Production (UOM:t(Tonnes))"] !== ""
   );
 
-  function findMaximum(year: number) {
+  function findMaximum(year: number): string {
     return filteredData
       .filter(
         (element) => element.Year === `Financial Year (Apr - Mar), ${year}`
@@ -30,9 +41,9 @@ export default function App() {
           prev["Crop Production (UOM:t(Tonnes))"]
           ? curr
           : prev;
-      })["Crop Production (UOM:t(Tonnes))"];
+      })["Crop Name"];
   }
-  function findMinimum(year: number) {
+  function findMinimum(year: number): string {
     return filteredData
       .filter(
         (element) => element.Year === `Financial Year (Apr - Mar), ${year}`
@@ -42,10 +53,11 @@ export default function App() {
           prev["Crop Production (UOM:t(Tonnes))"]
           ? curr
           : prev;
-      })["Crop Production (UOM:t(Tonnes))"];
+      })["Crop Name"];
   }
-  
-  const elements = generateElements(1950, 2020);
+
+  const elements: { year: number; maximum: string; minimum: string }[] =
+    generateElements(1950, 2020);
   const rows = elements.map((element) => (
     <Table.Tr key={element.year}>
       <Table.Td>{element.year}</Table.Td>
@@ -68,24 +80,30 @@ export default function App() {
   }[] = [];
 
   Object.keys(groupedData).forEach((cropName) => {
-    const total = groupedData[cropName].reduce((prev, curr) => {
-      return prev + curr["Crop Production (UOM:t(Tonnes))"];
-    }, 0);
-    const total1 = groupedData[cropName].reduce((prev, curr) => {
-      return prev + curr["Area Under Cultivation (UOM:Ha(Hectares))"];
-    }, 0);
+    const total = groupedData[cropName].reduce(
+      (prev: number, curr: CropData) => {
+        return prev + curr["Crop Production (UOM:t(Tonnes))"];
+      },
+      0
+    );
+    const total1 = groupedData[cropName].reduce(
+      (prev: number, curr: CropData) => {
+        return prev + curr["Area Under Cultivation (UOM:Ha(Hectares))"];
+      },
+      0
+    );
     elements1.push({
       crop: cropName,
-      averageCropProduction: (total/71).toFixed(3),
-      averageAreaUnderCultivation: (total1/71).toFixed(3),
+      averageCropProduction: Number((total / 71).toFixed(3)),
+      averageAreaUnderCultivation: Number((total1 / 71).toFixed(3)),
     });
   });
 
   const columns = elements1.map((element) => (
     <Table.Tr key={element.crop}>
       <Table.Td>{element.crop}</Table.Td>
-      <Table.Td>{(element.averageCropProduction)}</Table.Td>
-      <Table.Td>{(element.averageAreaUnderCultivation)}</Table.Td>
+      <Table.Td>{element.averageCropProduction}</Table.Td>
+      <Table.Td>{element.averageAreaUnderCultivation}</Table.Td>
     </Table.Tr>
   ));
 
